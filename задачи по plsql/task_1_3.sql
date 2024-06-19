@@ -1,21 +1,21 @@
-/*Задана таблица ROUTE со столбцами:
+/*Р—Р°РґР°РЅР° С‚Р°Р±Р»РёС†Р° ROUTE СЃРѕ СЃС‚РѕР»Р±С†Р°РјРё:
 ID NUMBER PRIMARY KEY,
 CITY1 VARCHAR2(40),
 CITY2 VARCHAR2(40),
 DIST NUMBER,
-где ID – уникальный номер, CITY1 и CITY2 – названия городов, DIST – расстояние между городами.
- Названия городов – уникальны.
-Создать процедуру, которая позволит находить пути между двумя городами с наименьшим
-количеством пересадок и выбирать среди них пути с наименьшей длиной.
-Имена городов – параметры процедуры.
-Программа должна предусматривать обработку исключений.
-Пример представления результата для городов Псков и Вологда:
-Маршруты между Псков и Вологда с наименьшим количеством пересадок
-Псков – Калуга - Вологда Длина маршрута - 120
-Псков - Вязьма - Вологда Длина маршрута - 200
-Минимальное количество пересадок - 1
-Маршрут с наименьшей длиной и с наименьшим количеством пересадок:
-Псков – Калуга - Вологда Длина маршрута - 120*/
+РіРґРµ ID вЂ“ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РЅРѕРјРµСЂ, CITY1 Рё CITY2 вЂ“ РЅР°Р·РІР°РЅРёСЏ РіРѕСЂРѕРґРѕРІ, DIST вЂ“ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ РіРѕСЂРѕРґР°РјРё.
+ РќР°Р·РІР°РЅРёСЏ РіРѕСЂРѕРґРѕРІ вЂ“ СѓРЅРёРєР°Р»СЊРЅС‹.
+РЎРѕР·РґР°С‚СЊ РїСЂРѕС†РµРґСѓСЂСѓ, РєРѕС‚РѕСЂР°СЏ РїРѕР·РІРѕР»РёС‚ РЅР°С…РѕРґРёС‚СЊ РїСѓС‚Рё РјРµР¶РґСѓ РґРІСѓРјСЏ РіРѕСЂРѕРґР°РјРё СЃ РЅР°РёРјРµРЅСЊС€РёРј
+РєРѕР»РёС‡РµСЃС‚РІРѕРј РїРµСЂРµСЃР°РґРѕРє Рё РІС‹Р±РёСЂР°С‚СЊ СЃСЂРµРґРё РЅРёС… РїСѓС‚Рё СЃ РЅР°РёРјРµРЅСЊС€РµР№ РґР»РёРЅРѕР№.
+РРјРµРЅР° РіРѕСЂРѕРґРѕРІ вЂ“ РїР°СЂР°РјРµС‚СЂС‹ РїСЂРѕС†РµРґСѓСЂС‹.
+РџСЂРѕРіСЂР°РјРјР° РґРѕР»Р¶РЅР° РїСЂРµРґСѓСЃРјР°С‚СЂРёРІР°С‚СЊ РѕР±СЂР°Р±РѕС‚РєСѓ РёСЃРєР»СЋС‡РµРЅРёР№.
+РџСЂРёРјРµСЂ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ СЂРµР·СѓР»СЊС‚Р°С‚Р° РґР»СЏ РіРѕСЂРѕРґРѕРІ РџСЃРєРѕРІ Рё Р’РѕР»РѕРіРґР°:
+РњР°СЂС€СЂСѓС‚С‹ РјРµР¶РґСѓ РџСЃРєРѕРІ Рё Р’РѕР»РѕРіРґР° СЃ РЅР°РёРјРµРЅСЊС€РёРј РєРѕР»РёС‡РµСЃС‚РІРѕРј РїРµСЂРµСЃР°РґРѕРє
+РџСЃРєРѕРІ вЂ“ РљР°Р»СѓРіР° - Р’РѕР»РѕРіРґР° Р”Р»РёРЅР° РјР°СЂС€СЂСѓС‚Р° - 120
+РџСЃРєРѕРІ - Р’СЏР·СЊРјР° - Р’РѕР»РѕРіРґР° Р”Р»РёРЅР° РјР°СЂС€СЂСѓС‚Р° - 200
+РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµСЃР°РґРѕРє - 1
+РњР°СЂС€СЂСѓС‚ СЃ РЅР°РёРјРµРЅСЊС€РµР№ РґР»РёРЅРѕР№ Рё СЃ РЅР°РёРјРµРЅСЊС€РёРј РєРѕР»РёС‡РµСЃС‚РІРѕРј РїРµСЂРµСЃР°РґРѕРє:
+РџСЃРєРѕРІ вЂ“ РљР°Р»СѓРіР° - Р’РѕР»РѕРіРґР° Р”Р»РёРЅР° РјР°СЂС€СЂСѓС‚Р° - 120*/
 
 DROP TABLE ROUTE;
 CREATE TABLE ROUTE (
@@ -25,43 +25,43 @@ CITY2 VARCHAR2(40),
 DIST NUMBER(10)
 );
 
---Заполнение таблицы
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (1, 'Москва', 'Санкт-Петербург', 634);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (2, 'Санкт-Петербург', 'Екатеринбург', 2292);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (3, 'Москва','Казань', 809);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (4, 'Казань', 'Екатеринбург', 717);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (5, 'Екатеринбург', 'Иркутск', 2813);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (6, 'Москва', 'Сочи', 1620);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (7, 'Сочи', 'Иркутск', 4798);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (8, 'Сочи', 'Анапа', 1384);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (9, 'Москва', 'Краснодар', 1345);
-INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (10, 'Краснодар', 'Анапа', 165);
+--Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (1, 'РњРѕСЃРєРІР°', 'РЎР°РЅРєС‚-РџРµС‚РµСЂР±СѓСЂРі', 634);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (2, 'РЎР°РЅРєС‚-РџРµС‚РµСЂР±СѓСЂРі', 'Р•РєР°С‚РµСЂРёРЅР±СѓСЂРі', 2292);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (3, 'РњРѕСЃРєРІР°','РљР°Р·Р°РЅСЊ', 809);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (4, 'РљР°Р·Р°РЅСЊ', 'Р•РєР°С‚РµСЂРёРЅР±СѓСЂРі', 717);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (5, 'Р•РєР°С‚РµСЂРёРЅР±СѓСЂРі', 'РСЂРєСѓС‚СЃРє', 2813);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (6, 'РњРѕСЃРєРІР°', 'РЎРѕС‡Рё', 1620);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (7, 'РЎРѕС‡Рё', 'РСЂРєСѓС‚СЃРє', 4798);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (8, 'РЎРѕС‡Рё', 'РђРЅР°РїР°', 1384);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (9, 'РњРѕСЃРєРІР°', 'РљСЂР°СЃРЅРѕРґР°СЂ', 1345);
+INSERT INTO ROUTE (ID, CITY1, CITY2, DIST) VALUES (10, 'РљСЂР°СЃРЅРѕРґР°СЂ', 'РђРЅР°РїР°', 165);
 
 COMMIT;
 
---Решение
---Спецификация пакета
+--Р РµС€РµРЅРёРµ
+--РЎРїРµС†РёС„РёРєР°С†РёСЏ РїР°РєРµС‚Р°
 /
 CREATE OR REPLACE PACKAGE PATH3 IS
 PROCEDURE FIND_SHORTEST_PATH(START_CITY ROUTE.CITY1%TYPE, FINISH_CITY ROUTE.CITY2%TYPE);
 END PATH3;
 
---Тело пакета
+--РўРµР»Рѕ РїР°РєРµС‚Р°
 /
 CREATE OR REPLACE PACKAGE BODY PATH3 IS
---ПЕРЕМЕННЫЕ:
+--РџР•Р Р•РњР•РќРќР«Р•:
 TYPE way_rec IS RECORD(WSTR VARCHAR2(100), RESDIS NUMBER(10), LASTCITY ROUTE.CITY1%TYPE);
 TYPE ways_tab IS TABLE OF way_rec;
---ФУНКЦИИ И ПРОЦЕДУРЫ:
+--Р¤РЈРќРљР¦РР Р РџР РћР¦Р•Р”РЈР Р«:
 FUNCTION CREATE_START_PATH_TAB(START_CITY ROUTE.CITY1%TYPE) RETURN ways_tab;
 FUNCTION DIFFERENT_CITY(SAMPLE_CITY ROUTE.CITY1%TYPE, CITY1 ROUTE.CITY1%TYPE, CITY2 ROUTE.CITY1%TYPE) RETURN ROUTE.CITY1%TYPE;
 FUNCTION FIND_PATH(START_CITY ROUTE.CITY1%TYPE, FINISH_CITY ROUTE.CITY2%TYPE) RETURN ways_tab;
 FUNCTION ISCYCLE(STR IN VARCHAR2, CITY IN ROUTE.CITY1%TYPE) RETURN BOOLEAN;
 PROCEDURE MAKE_NEXT_STEP(OLD_TAB IN ways_tab, FINISH_CITY IN ROUTE.CITY2%TYPE, FOUND_ROUTE IN OUT ways_tab);
 
---Функция создаёт на основе таблицы ROUTE индексную таблицу всех дорог из города START_CITY.
---Вход: START_CITY - город, от которого нужно проложить путь.
---Выход: индексная таблица с путями из START_CITY
+--Р¤СѓРЅРєС†РёСЏ СЃРѕР·РґР°С‘С‚ РЅР° РѕСЃРЅРѕРІРµ С‚Р°Р±Р»РёС†С‹ ROUTE РёРЅРґРµРєСЃРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ РІСЃРµС… РґРѕСЂРѕРі РёР· РіРѕСЂРѕРґР° START_CITY.
+--Р’С…РѕРґ: START_CITY - РіРѕСЂРѕРґ, РѕС‚ РєРѕС‚РѕСЂРѕРіРѕ РЅСѓР¶РЅРѕ РїСЂРѕР»РѕР¶РёС‚СЊ РїСѓС‚СЊ.
+--Р’С‹С…РѕРґ: РёРЅРґРµРєСЃРЅР°СЏ С‚Р°Р±Р»РёС†Р° СЃ РїСѓС‚СЏРјРё РёР· START_CITY
 FUNCTION CREATE_START_PATH_TAB(START_CITY ROUTE.CITY1%TYPE)
 RETURN ways_tab IS
 temp_tab ways_tab := ways_tab();
@@ -75,25 +75,24 @@ next_city ROUTE.CITY1%TYPE;
 BEGIN
 
 FOR rec IN c_ways LOOP
---Определяем следующий город
+--РћРїСЂРµРґРµР»СЏРµРј СЃР»РµРґСѓСЋС‰РёР№ РіРѕСЂРѕРґ
 next_city := DIFFERENT_CITY(START_CITY, rec.CITY1, rec.CITY2);
---Создаём запись
-v_wayRec.WSTR := START_CITY || ' — ' || next_city;
+--РЎРѕР·РґР°С‘Рј Р·Р°РїРёСЃСЊ
+v_wayRec.WSTR := START_CITY || ' вЂ” ' || next_city;
 v_wayRec.RESDIS := rec.DIST;
 v_wayRec.LASTCITY := next_city;
---v_wayRec.TRANSFERS := LENGTH(v_wayRec.WSTR) - LENGTH(REPLACE(v_wayRec.WSTR, '-', ''));
---Добавляем запись
+--Р”РѕР±Р°РІР»СЏРµРј Р·Р°РїРёСЃСЊ
 temp_tab.EXTEND;
 temp_tab(v_ind) := v_wayRec;
---Увеличиваем счётчик индекса таблицы
+--РЈРІРµР»РёС‡РёРІР°РµРј СЃС‡С‘С‚С‡РёРє РёРЅРґРµРєСЃР° С‚Р°Р±Р»РёС†С‹
 v_ind := v_ind + 1;
 END LOOP;
 RETURN temp_tab;
 END CREATE_START_PATH_TAB;
 
---Функция определяет город, отличный от двух других
---Вход: SAMPLE_CITY - образец; CITY1 - первый город для сравнения; CITY2 - второй город для сравнения.
---Выход: название отличного города.
+--Р¤СѓРЅРєС†РёСЏ РѕРїСЂРµРґРµР»СЏРµС‚ РіРѕСЂРѕРґ, РѕС‚Р»РёС‡РЅС‹Р№ РѕС‚ РґРІСѓС… РґСЂСѓРіРёС…
+--Р’С…РѕРґ: SAMPLE_CITY - РѕР±СЂР°Р·РµС†; CITY1 - РїРµСЂРІС‹Р№ РіРѕСЂРѕРґ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ; CITY2 - РІС‚РѕСЂРѕР№ РіРѕСЂРѕРґ РґР»СЏ СЃСЂР°РІРЅРµРЅРёСЏ.
+--Р’С‹С…РѕРґ: РЅР°Р·РІР°РЅРёРµ РѕС‚Р»РёС‡РЅРѕРіРѕ РіРѕСЂРѕРґР°.
 FUNCTION DIFFERENT_CITY(
 SAMPLE_CITY ROUTE.CITY1%TYPE,
 CITY1 ROUTE.CITY1%TYPE,
@@ -107,30 +106,30 @@ RETURN CITY1;
 END IF;
 END;
 
---Функция ищет все пути между двумя указанными городами.
---Вход: START_CITY - откуда; FINISH_CITY - куда.
---Выход: таблица всех путей из START_CITY в FINISH_CITY.
+--Р¤СѓРЅРєС†РёСЏ РёС‰РµС‚ РІСЃРµ РїСѓС‚Рё РјРµР¶РґСѓ РґРІСѓРјСЏ СѓРєР°Р·Р°РЅРЅС‹РјРё РіРѕСЂРѕРґР°РјРё.
+--Р’С…РѕРґ: START_CITY - РѕС‚РєСѓРґР°; FINISH_CITY - РєСѓРґР°.
+--Р’С‹С…РѕРґ: С‚Р°Р±Р»РёС†Р° РІСЃРµС… РїСѓС‚РµР№ РёР· START_CITY РІ FINISH_CITY.
 FUNCTION FIND_PATH(
 START_CITY ROUTE.CITY1%TYPE,
 FINISH_CITY ROUTE.CITY2%TYPE)
 RETURN ways_tab IS
---Переменные
-v_distance NUMBER(10); --расстояние
-v_wayStr VARCHAR2(100); --путь
+--РџРµСЂРµРјРµРЅРЅС‹Рµ
+v_distance NUMBER(10); --СЂР°СЃСЃС‚РѕСЏРЅРёРµ
+v_wayStr VARCHAR2(100); --РїСѓС‚СЊ
 e_sameCity EXCEPTION;
 new_rec way_rec;
---Объявление и инициализация вложенных таблиц
+--РћР±СЉСЏРІР»РµРЅРёРµ Рё РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РІР»РѕР¶РµРЅРЅС‹С… С‚Р°Р±Р»РёС†
 pathsTab ways_tab := ways_tab();
 foundPathTab ways_tab := ways_tab();
 BEGIN
---Если был указан один и тот же город
+--Р•СЃР»Рё Р±С‹Р» СѓРєР°Р·Р°РЅ РѕРґРёРЅ Рё С‚РѕС‚ Р¶Рµ РіРѕСЂРѕРґ
 IF START_CITY = FINISH_CITY THEN
 RAISE e_sameCity;
 ELSE
---Создаём индексную таблицу с заготовкой путей из START_CITY
+--РЎРѕР·РґР°С‘Рј РёРЅРґРµРєСЃРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ СЃ Р·Р°РіРѕС‚РѕРІРєРѕР№ РїСѓС‚РµР№ РёР· START_CITY
 pathsTab := CREATE_START_PATH_TAB(START_CITY);
 
---Строим все пути до FINISH_CITY
+--РЎС‚СЂРѕРёРј РІСЃРµ РїСѓС‚Рё РґРѕ FINISH_CITY
 MAKE_NEXT_STEP(pathsTab, FINISH_CITY, foundPathTab);
 FOR i IN pathsTab.FIRST..pathsTab.LAST LOOP
 IF pathsTab(i).LASTCITY = FINISH_CITY THEN
@@ -146,13 +145,13 @@ RETURN foundPathTab;
 
 EXCEPTION
 WHEN e_sameCity THEN
-DBMS_OUTPUT.PUT_LINE('Выбран один и тот же город');
+DBMS_OUTPUT.PUT_LINE('Р’С‹Р±СЂР°РЅ РѕРґРёРЅ Рё С‚РѕС‚ Р¶Рµ РіРѕСЂРѕРґ');
 WHEN OTHERS THEN
-DBMS_OUTPUT.PUT_LINE('Ошибка в веденных данных');
+DBMS_OUTPUT.PUT_LINE('РћС€РёР±РєР° РІ РІРµРґРµРЅРЅС‹С… РґР°РЅРЅС‹С…');
 END FIND_PATH;
 
---Процедура находит самый короткий путь между указанными городами.
---Вход: START_CITY - откуда; FINISH_CITY - куда.
+--РџСЂРѕС†РµРґСѓСЂР° РЅР°С…РѕРґРёС‚ СЃР°РјС‹Р№ РєРѕСЂРѕС‚РєРёР№ РїСѓС‚СЊ РјРµР¶РґСѓ СѓРєР°Р·Р°РЅРЅС‹РјРё РіРѕСЂРѕРґР°РјРё.
+--Р’С…РѕРґ: START_CITY - РѕС‚РєСѓРґР°; FINISH_CITY - РєСѓРґР°.
 PROCEDURE FIND_SHORTEST_PATH(
 START_CITY ROUTE.CITY1%TYPE,
 FINISH_CITY ROUTE.CITY2%TYPE) IS
@@ -160,32 +159,32 @@ minTRANSFER NUMBER(10):=100000;
 minDist NUMBER(10):=10000;
 shPathTab ways_tab := ways_tab();
 BEGIN
---Найдём все пути из START_CITY в FINISH_CITY
+--РќР°Р№РґС‘Рј РІСЃРµ РїСѓС‚Рё РёР· START_CITY РІ FINISH_CITY
 shPathTab := FIND_PATH(START_CITY, FINISH_CITY);
 
 FOR i IN shPathTab.FIRST..shPathTab.LAST LOOP
 -- DBMS_OUTPUT.PUT_LINE(shPathTab(i).TRANSFERS);
-IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, '—', ''))<minTRANSFER
+IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, 'вЂ”', ''))<minTRANSFER
 THEN
-minTRANSFER := LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, '—', ''));
+minTRANSFER := LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, 'вЂ”', ''));
 END IF;
 END LOOP;
-DBMS_OUTPUT.PUT_LINE('Маршруты между ' || START_CITY || ' и ' || FINISH_CITY || ' с наименьшим количеством пересадок: ');
+DBMS_OUTPUT.PUT_LINE('РњР°СЂС€СЂСѓС‚С‹ РјРµР¶РґСѓ ' || START_CITY || ' Рё ' || FINISH_CITY || ' СЃ РЅР°РёРјРµРЅСЊС€РёРј РєРѕР»РёС‡РµСЃС‚РІРѕРј РїРµСЂРµСЃР°РґРѕРє: ');
 
 FOR i IN shPathTab.FIRST..shPathTab.LAST LOOP
-IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, '—', '')) = minTRANSFER THEN
---Вывод пути на экран
+IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, 'вЂ”', '')) = minTRANSFER THEN
+--Р’С‹РІРѕРґ РїСѓС‚Рё РЅР° СЌРєСЂР°РЅ
 DBMS_OUTPUT.PUT_LINE(shPathTab(i).WSTR);
-DBMS_OUTPUT.PUT_LINE('Длина маршрута - ' || shPathTab(i).RESDIS);
+DBMS_OUTPUT.PUT_LINE('Р”Р»РёРЅР° РјР°СЂС€СЂСѓС‚Р° - ' || shPathTab(i).RESDIS);
 DBMS_OUTPUT.PUT_LINE('');
 END IF;
 END LOOP;
 
-DBMS_OUTPUT.PUT_LINE('Минимальное количество пересадок - ' || minTRANSFER);
+DBMS_OUTPUT.PUT_LINE('РњРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµСЃР°РґРѕРє - ' || minTRANSFER);
 DBMS_OUTPUT.PUT_LINE('');
 
 FOR i IN shPathTab.FIRST..shPathTab.LAST LOOP
-IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, '—', '')) = minTRANSFER THEN
+IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, 'вЂ”', '')) = minTRANSFER THEN
 IF shPathTab(i).RESDIS<minDist THEN 
 minDist:=shPathTab(i).RESDIS;
 END IF;
@@ -193,21 +192,21 @@ END IF;
 END LOOP;
 
 
-DBMS_OUTPUT.PUT_LINE('Маршрут с наименьшей длиной и с наименьшим количеством пересадок:');
+DBMS_OUTPUT.PUT_LINE('РњР°СЂС€СЂСѓС‚ СЃ РЅР°РёРјРµРЅСЊС€РµР№ РґР»РёРЅРѕР№ Рё СЃ РЅР°РёРјРµРЅСЊС€РёРј РєРѕР»РёС‡РµСЃС‚РІРѕРј РїРµСЂРµСЃР°РґРѕРє:');
 
 FOR i IN shPathTab.FIRST..shPathTab.LAST LOOP
-IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, '—', '')) = minTRANSFER 
+IF LENGTH(shPathTab(i).WSTR) - LENGTH(REPLACE(shPathTab(i).WSTR, 'вЂ”', '')) = minTRANSFER 
 AND minDist=shPathTab(i).RESDIS THEN
---Вывод пути на экран
+--Р’С‹РІРѕРґ РїСѓС‚Рё РЅР° СЌРєСЂР°РЅ
 DBMS_OUTPUT.PUT_LINE(shPathTab(i).WSTR);
-DBMS_OUTPUT.PUT_LINE('Длина маршрута - ' || shPathTab(i).RESDIS);
+DBMS_OUTPUT.PUT_LINE('Р”Р»РёРЅР° РјР°СЂС€СЂСѓС‚Р° - ' || shPathTab(i).RESDIS);
 END IF;
 END LOOP;
 END FIND_SHORTEST_PATH;
 
---Функция проверяет, появится ли цикл при добавлении в конец пути нового города (т.е. есть ли этот город в строке STR)
---Вход: STR - строка пройденного пути; CITY - название города.
---Выход: TRUE - если город уже входит в данный путь; FALSE - если город встречается на пути впервые.
+--Р¤СѓРЅРєС†РёСЏ РїСЂРѕРІРµСЂСЏРµС‚, РїРѕСЏРІРёС‚СЃСЏ Р»Рё С†РёРєР» РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РІ РєРѕРЅРµС† РїСѓС‚Рё РЅРѕРІРѕРіРѕ РіРѕСЂРѕРґР° (С‚.Рµ. РµСЃС‚СЊ Р»Рё СЌС‚РѕС‚ РіРѕСЂРѕРґ РІ СЃС‚СЂРѕРєРµ STR)
+--Р’С…РѕРґ: STR - СЃС‚СЂРѕРєР° РїСЂРѕР№РґРµРЅРЅРѕРіРѕ РїСѓС‚Рё; CITY - РЅР°Р·РІР°РЅРёРµ РіРѕСЂРѕРґР°.
+--Р’С‹С…РѕРґ: TRUE - РµСЃР»Рё РіРѕСЂРѕРґ СѓР¶Рµ РІС…РѕРґРёС‚ РІ РґР°РЅРЅС‹Р№ РїСѓС‚СЊ; FALSE - РµСЃР»Рё РіРѕСЂРѕРґ РІСЃС‚СЂРµС‡Р°РµС‚СЃСЏ РЅР° РїСѓС‚Рё РІРїРµСЂРІС‹Рµ.
 FUNCTION ISCYCLE(STR IN VARCHAR2, CITY IN ROUTE.CITY1%TYPE)
 RETURN BOOLEAN IS
 BEGIN
@@ -218,16 +217,16 @@ RETURN TRUE;
 END IF;
 END ISCYCLE;
 
---Процедура добавляет следующий возможный шаг для всех путей
---Вход: WTAB - индексная таблица путей; FINISH_CITY - целевой город.
---Выход: изменённая индексная таблица WTAB
+--РџСЂРѕС†РµРґСѓСЂР° РґРѕР±Р°РІР»СЏРµС‚ СЃР»РµРґСѓСЋС‰РёР№ РІРѕР·РјРѕР¶РЅС‹Р№ С€Р°Рі РґР»СЏ РІСЃРµС… РїСѓС‚РµР№
+--Р’С…РѕРґ: WTAB - РёРЅРґРµРєСЃРЅР°СЏ С‚Р°Р±Р»РёС†Р° РїСѓС‚РµР№; FINISH_CITY - С†РµР»РµРІРѕР№ РіРѕСЂРѕРґ.
+--Р’С‹С…РѕРґ: РёР·РјРµРЅС‘РЅРЅР°СЏ РёРЅРґРµРєСЃРЅР°СЏ С‚Р°Р±Р»РёС†Р° WTAB
 PROCEDURE MAKE_NEXT_STEP(
 OLD_TAB IN ways_tab,
 FINISH_CITY IN ROUTE.CITY2%TYPE,
 FOUND_ROUTE IN OUT ways_tab) IS
 new_tab ways_tab := ways_tab();
 new_tab_rec way_rec;
---Этот курсор будет извлекать все пути, которые начинаются или заканчиваются в указанном городе
+--Р­С‚РѕС‚ РєСѓСЂСЃРѕСЂ Р±СѓРґРµС‚ РёР·РІР»РµРєР°С‚СЊ РІСЃРµ РїСѓС‚Рё, РєРѕС‚РѕСЂС‹Рµ РЅР°С‡РёРЅР°СЋС‚СЃСЏ РёР»Рё Р·Р°РєР°РЅС‡РёРІР°СЋС‚СЃСЏ РІ СѓРєР°Р·Р°РЅРЅРѕРј РіРѕСЂРѕРґРµ
 CURSOR c_way_from(CITY_FROM ROUTE.CITY1%TYPE) IS
 SELECT CITY1,
 CITY2, DIST
@@ -237,42 +236,42 @@ TYPE t_path_rec IS RECORD(CITY1 ROUTE.CITY1%TYPE, CITY2 ROUTE.CITY2%TYPE, DIS RO
 path_rec t_path_rec;
 next_city ROUTE.CITY1%TYPE;
 BEGIN
---Проверяем, существуют ли ещё потенциальные пути до FINISH_CITY (т.е. пуста ли таблица OLD_TAB). Если таблица OLD_TAB пуста, то выходим из процедуры MAKE_NEXT_STEP
+--РџСЂРѕРІРµСЂСЏРµРј, СЃСѓС‰РµСЃС‚РІСѓСЋС‚ Р»Рё РµС‰С‘ РїРѕС‚РµРЅС†РёР°Р»СЊРЅС‹Рµ РїСѓС‚Рё РґРѕ FINISH_CITY (С‚.Рµ. РїСѓСЃС‚Р° Р»Рё С‚Р°Р±Р»РёС†Р° OLD_TAB). Р•СЃР»Рё С‚Р°Р±Р»РёС†Р° OLD_TAB РїСѓСЃС‚Р°, С‚Рѕ РІС‹С…РѕРґРёРј РёР· РїСЂРѕС†РµРґСѓСЂС‹ MAKE_NEXT_STEP
 IF OLD_TAB.COUNT = 0 THEN
 RETURN;
 END IF;
 FOR i IN OLD_TAB.FIRST..OLD_TAB.LAST LOOP
---Находим все дороги из конечного города текущего пути
+--РќР°С…РѕРґРёРј РІСЃРµ РґРѕСЂРѕРіРё РёР· РєРѕРЅРµС‡РЅРѕРіРѕ РіРѕСЂРѕРґР° С‚РµРєСѓС‰РµРіРѕ РїСѓС‚Рё
 OPEN c_way_from(OLD_TAB(i).LASTCITY);
 LOOP
---Извлечение очередной строки данных из курсора c_way_from и присваивание её содержимого переменной path_rec
+--РР·РІР»РµС‡РµРЅРёРµ РѕС‡РµСЂРµРґРЅРѕР№ СЃС‚СЂРѕРєРё РґР°РЅРЅС‹С… РёР· РєСѓСЂСЃРѕСЂР° c_way_from Рё РїСЂРёСЃРІР°РёРІР°РЅРёРµ РµС‘ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ РїРµСЂРµРјРµРЅРЅРѕР№ path_rec
 FETCH c_way_from INTO path_rec;
 EXIT WHEN c_way_from%NOTFOUND;
---Определяем следующий город на пути
+--РћРїСЂРµРґРµР»СЏРµРј СЃР»РµРґСѓСЋС‰РёР№ РіРѕСЂРѕРґ РЅР° РїСѓС‚Рё
 next_city := DIFFERENT_CITY(OLD_TAB(i).LASTCITY, path_rec.CITY1, path_rec.CITY2);
---Проверяем, появится ли цикл при добавлении в текущий путь города next_city
+--РџСЂРѕРІРµСЂСЏРµРј, РїРѕСЏРІРёС‚СЃСЏ Р»Рё С†РёРєР» РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РІ С‚РµРєСѓС‰РёР№ РїСѓС‚СЊ РіРѕСЂРѕРґР° next_city
 IF ISCYCLE(OLD_TAB(i).WSTR, next_city) THEN
---Если город next_city уже был пройден в текущем пути, то пропускаем данную дорогу и переходим к следующей
+--Р•СЃР»Рё РіРѕСЂРѕРґ next_city СѓР¶Рµ Р±С‹Р» РїСЂРѕР№РґРµРЅ РІ С‚РµРєСѓС‰РµРј РїСѓС‚Рё, С‚Рѕ РїСЂРѕРїСѓСЃРєР°РµРј РґР°РЅРЅСѓСЋ РґРѕСЂРѕРіСѓ Рё РїРµСЂРµС…РѕРґРёРј Рє СЃР»РµРґСѓСЋС‰РµР№
 CONTINUE;
 
 END IF;
---Составим новую запись для новой таблицы путей
-new_tab_rec.WSTR := OLD_TAB(i).WSTR || ' — ' || next_city;
+--РЎРѕСЃС‚Р°РІРёРј РЅРѕРІСѓСЋ Р·Р°РїРёСЃСЊ РґР»СЏ РЅРѕРІРѕР№ С‚Р°Р±Р»РёС†С‹ РїСѓС‚РµР№
+new_tab_rec.WSTR := OLD_TAB(i).WSTR || ' вЂ” ' || next_city;
 new_tab_rec.RESDIS := OLD_TAB(i).RESDIS + path_rec.DIS;
 new_tab_rec.LASTCITY := next_city;
 IF next_city = FINISH_CITY THEN
---Добавим запись в таблицу искомых путей
+--Р”РѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ С‚Р°Р±Р»РёС†Сѓ РёСЃРєРѕРјС‹С… РїСѓС‚РµР№
 FOUND_ROUTE.EXTEND;
 FOUND_ROUTE(FOUND_ROUTE.LAST) := new_tab_rec;
 ELSE
---Добавим запись в новую таблицу путей
+--Р”РѕР±Р°РІРёРј Р·Р°РїРёСЃСЊ РІ РЅРѕРІСѓСЋ С‚Р°Р±Р»РёС†Сѓ РїСѓС‚РµР№
 new_tab.EXTEND;
 new_tab(new_tab.LAST) := new_tab_rec;
 END IF;
 END LOOP;
 CLOSE c_way_from;
 END LOOP;
---Рекурсивно вызываем процедуру MAKE_NEXT_STEP для таблицы путей new_tab
+--Р РµРєСѓСЂСЃРёРІРЅРѕ РІС‹Р·С‹РІР°РµРј РїСЂРѕС†РµРґСѓСЂСѓ MAKE_NEXT_STEP РґР»СЏ С‚Р°Р±Р»РёС†С‹ РїСѓС‚РµР№ new_tab
 MAKE_NEXT_STEP(new_tab, FINISH_CITY, FOUND_ROUTE);
 END MAKE_NEXT_STEP;
 END PATH3;
@@ -280,8 +279,8 @@ END PATH3;
 /
 
 DECLARE
-START_CITY ROUTE.CITY1%TYPE := 'Москва';
-FINISH_CITY ROUTE.CITY1%TYPE := 'Екатеринбург';
+START_CITY ROUTE.CITY1%TYPE := 'РњРѕСЃРєРІР°';
+FINISH_CITY ROUTE.CITY1%TYPE := 'Р•РєР°С‚РµСЂРёРЅР±СѓСЂРі';
 BEGIN
 PATH3.FIND_SHORTEST_PATH(START_CITY, FINISH_CITY);
 END;
