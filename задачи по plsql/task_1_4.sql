@@ -1,5 +1,5 @@
-/*Разработать программу, которая для произвольной таблицы определяла бы сумму входящих в нее цифр. 
-Имя таблицы – параметр. Для решения использовать пакет DBMS_SQL.*/
+/*Р Р°Р·СЂР°Р±РѕС‚Р°С‚СЊ РїСЂРѕРіСЂР°РјРјСѓ, РєРѕС‚РѕСЂР°СЏ РґР»СЏ РїСЂРѕРёР·РІРѕР»СЊРЅРѕР№ С‚Р°Р±Р»РёС†С‹ РѕРїСЂРµРґРµР»СЏР»Р° Р±С‹ СЃСѓРјРјСѓ РІС…РѕРґСЏС‰РёС… РІ РЅРµРµ С†РёС„СЂ. 
+РРјСЏ С‚Р°Р±Р»РёС†С‹ вЂ“ РїР°СЂР°РјРµС‚СЂ. Р”Р»СЏ СЂРµС€РµРЅРёСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїР°РєРµС‚ DBMS_SQL.*/
 
 DROP TABLE EXAMPLE1;
 CREATE TABLE EXAMPLE1 (
@@ -21,64 +21,64 @@ SELECT* FROM EXAMPLE1;
 
 ALTER SESSION SET NLS_DATE_FORMAT = 'DD.MM.YYYY';
 CREATE OR REPLACE PROCEDURE calc_sum(table_name IN VARCHAR2) AS
-    v_cursor PLS_INTEGER; -- переменная для идентификатора курсора
-    v_result PLS_INTEGER; -- переменная для результата выполнения запроса
-    v_col_value VARCHAR2(32000); -- переменная для значения столбца
-    str VARCHAR2(32000):=''; -- переменная для хранения всех значений таблице
-    total_sum number:=0; -- переменная для подсчета суммы
-    v_col_count number:=0; -- переменная для подсчета количества столбцов в таблице
+    v_cursor PLS_INTEGER; -- РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° РєСѓСЂСЃРѕСЂР°
+    v_result PLS_INTEGER; -- РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ СЂРµР·СѓР»СЊС‚Р°С‚Р° РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РїСЂРѕСЃР°
+    v_col_value VARCHAR2(32000); -- РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ Р·РЅР°С‡РµРЅРёСЏ СЃС‚РѕР»Р±С†Р°
+    str VARCHAR2(32000):=''; -- РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РІСЃРµС… Р·РЅР°С‡РµРЅРёР№ С‚Р°Р±Р»РёС†Рµ
+    total_sum number:=0; -- РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РїРѕРґСЃС‡РµС‚Р° СЃСѓРјРјС‹
+    v_col_count number:=0; -- РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РїРѕРґСЃС‡РµС‚Р° РєРѕР»РёС‡РµСЃС‚РІР° СЃС‚РѕР»Р±С†РѕРІ РІ С‚Р°Р±Р»РёС†Рµ
     no_table EXCEPTION;
    PRAGMA EXCEPTION_INIT(no_table, -00942);
    empty_table EXCEPTION;
    PRAGMA EXCEPTION_INIT(empty_table, -06502);
 BEGIN
-    v_cursor := DBMS_SQL.OPEN_CURSOR; -- Открытие курсора
+    v_cursor := DBMS_SQL.OPEN_CURSOR; -- РћС‚РєСЂС‹С‚РёРµ РєСѓСЂСЃРѕСЂР°
    DBMS_SQL.PARSE(v_cursor, 'SELECT * FROM ' || table_name, DBMS_SQL.NATIVE);
       
-   --подсчет количества столбцов в таблице
+   --РїРѕРґСЃС‡РµС‚ РєРѕР»РёС‡РµСЃС‚РІР° СЃС‚РѕР»Р±С†РѕРІ РІ С‚Р°Р±Р»РёС†Рµ
    LOOP
     v_col_count := v_col_count + 1;
     BEGIN
-     DBMS_SQL.DEFINE_COLUMN(v_cursor, v_col_count, v_col_value,1000); -- пытаемся определить следующий столбец
+     DBMS_SQL.DEFINE_COLUMN(v_cursor, v_col_count, v_col_value,1000); -- РїС‹С‚Р°РµРјСЃСЏ РѕРїСЂРµРґРµР»РёС‚СЊ СЃР»РµРґСѓСЋС‰РёР№ СЃС‚РѕР»Р±РµС†
     EXCEPTION
       WHEN OTHERS THEN
-        EXIT; -- когда больше столбцов нет, выходим из цикла
+        EXIT; -- РєРѕРіРґР° Р±РѕР»СЊС€Рµ СЃС‚РѕР»Р±С†РѕРІ РЅРµС‚, РІС‹С…РѕРґРёРј РёР· С†РёРєР»Р°
     END;
   END LOOP;
   --DBMS_OUTPUT.PUT_LINE(v_col_count);
   
-  --цикл по столбцам таблицы
+  --С†РёРєР» РїРѕ СЃС‚РѕР»Р±С†Р°Рј С‚Р°Р±Р»РёС†С‹
      FOR i IN 1..v_col_count-1 LOOP
-     v_result := DBMS_SQL.EXECUTE(v_cursor); -- Выполнение запроса
-    DBMS_SQL.DEFINE_COLUMN(v_cursor, i, v_col_value,1000); -- Определение столбца для извлечения значений
+     v_result := DBMS_SQL.EXECUTE(v_cursor); -- Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР°
+    DBMS_SQL.DEFINE_COLUMN(v_cursor, i, v_col_value,1000); -- РћРїСЂРµРґРµР»РµРЅРёРµ СЃС‚РѕР»Р±С†Р° РґР»СЏ РёР·РІР»РµС‡РµРЅРёСЏ Р·РЅР°С‡РµРЅРёР№
 
-    -- цикл обработки результатов запроса
+    -- С†РёРєР» РѕР±СЂР°Р±РѕС‚РєРё СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ Р·Р°РїСЂРѕСЃР°
     WHILE DBMS_SQL.FETCH_ROWS(v_cursor) > 0 LOOP
-        DBMS_SQL.COLUMN_VALUE(v_cursor, i, v_col_value); -- получение значения столбца
-       --DBMS_OUTPUT.PUT_LINE('Значение столбца: ' || TO_CHAR(v_col_value));
-        --присоединяем значение текущей ячейки к строке
+        DBMS_SQL.COLUMN_VALUE(v_cursor, i, v_col_value); -- РїРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ СЃС‚РѕР»Р±С†Р°
+       --DBMS_OUTPUT.PUT_LINE('Р—РЅР°С‡РµРЅРёРµ СЃС‚РѕР»Р±С†Р°: ' || TO_CHAR(v_col_value));
+        --РїСЂРёСЃРѕРµРґРёРЅСЏРµРј Р·РЅР°С‡РµРЅРёРµ С‚РµРєСѓС‰РµР№ СЏС‡РµР№РєРё Рє СЃС‚СЂРѕРєРµ
         str:=str||v_col_value;
     END LOOP;
     END LOOP;
   -- DBMS_OUTPUT.PUT_LINE(str);
     
-    --определяем сумму цифр в строке str
+    --РѕРїСЂРµРґРµР»СЏРµРј СЃСѓРјРјСѓ С†РёС„СЂ РІ СЃС‚СЂРѕРєРµ str
      FOR i IN 1..LENGTH(str) LOOP
         IF SUBSTR(str, i, 1) BETWEEN '0' AND '9' THEN
             total_sum := total_sum + TO_NUMBER(SUBSTR(str, i, 1));
         END IF;
     END LOOP;
-    DBMS_OUTPUT.PUT_LINE('Cумма цифр, входящих в таблицу ' || table_name );
+    DBMS_OUTPUT.PUT_LINE('CСѓРјРјР° С†РёС„СЂ, РІС…РѕРґСЏС‰РёС… РІ С‚Р°Р±Р»РёС†Сѓ ' || table_name );
     DBMS_OUTPUT.PUT_LINE(total_sum);
     DBMS_SQL.CLOSE_CURSOR(v_cursor); 
     
  EXCEPTION
     WHEN empty_table THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Таблица ' || table_name || ' пустая');
+        RAISE_APPLICATION_ERROR(-20001, 'РўР°Р±Р»РёС†Р° ' || table_name || ' РїСѓСЃС‚Р°СЏ');
     WHEN no_table THEN
-        RAISE_APPLICATION_ERROR(-20003, 'Таблица ' || table_name || ' не существует');
+        RAISE_APPLICATION_ERROR(-20003, 'РўР°Р±Р»РёС†Р° ' || table_name || ' РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚');
     WHEN OTHERS THEN
-            DBMS_OUTPUT.PUT_LINE('Произошла ошибка: ' || SQLERRM);
+            DBMS_OUTPUT.PUT_LINE('РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°: ' || SQLERRM);
 END;
 /
 
